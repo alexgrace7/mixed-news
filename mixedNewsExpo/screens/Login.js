@@ -19,7 +19,9 @@ export default class Login extends Component {
     onPressLogin = () => {
     this.props.navigation.navigate('Home')
     }
-        
+    
+
+
   render() {
     return (
       <View style={styles.container}>

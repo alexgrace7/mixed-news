@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, Button, ScrollView, Image } from "react-native";
 import logo from '../assets/logo.png'
+import * as firebase from 'firebase';
+import config from '../config.js'
+
+
 
 class Home extends React.Component {
+
 static navigationOptions = {
 title: "Home",
 headerStyle: {
@@ -10,15 +15,65 @@ backgroundColor: "#73C6B6"
 }
 };
 
+constructor(){
+    super();
+    if (!firebase.apps.length){
+    firebase.initializeApp(config);
+    }
+
+    this.state = {
+        currentItem: '',
+        username: '',
+        items: []
+      }
+}
+
+getUserData = () => {
+    let ref = firebase.database().ref('items/');
+    ref.on('value', snapshot => {
+    let items = snapshot.val();
+    let newState = [];
+    for (let item in items) {
+        newState.push({
+            id: item,
+            title: items[item].title,
+            user: items[item].user
+        });
+    }
+    this.setState({
+        items: newState
+        });
+    });
+  }
+componentDidMount(){
+    this.getUserData();
+}
+
 render() {
+    this.componentDidMount();
 return (
 <ScrollView >
 
     <View style={styles.container}>
 
-    <Text style={{fontSize:25, fontWeight:800, marginBottom:10}}>WELL BALANCED</Text>
-    <Text style={{fontSize:15, marginBottom:10}}> Updated: 10/30/2019 </Text>
+        <View>
+            {this.state.items.map( (item) => {
+                return(
+                    <View>
+                    <Text> {item.id}</Text>
+                    <Text> {item.title}</Text>
+                    <Text> {item.user}</Text>
+                    </View>
 
+                );
+            })}
+        </View>
+
+ 
+
+
+    <Text style={{fontSize:25, fontWeight:'800', marginBottom:10}}>WELL BALANCED</Text>
+    <Text style={{fontSize:15, marginBottom:10}}> Updated: 10/30/2019 </Text>
 
     <View style={styles.topicBox}>
         <View style={styles.topicBar}>
