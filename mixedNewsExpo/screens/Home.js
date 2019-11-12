@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button, ScrollView, Image } from "react-native";
+import { Platform, StyleSheet, Text, View, Button, ScrollView, Image, Linking } from "react-native";
 import logo from '../assets/logo.png'
 import * as firebase from 'firebase';
 import config from '../config.js'
@@ -76,11 +76,12 @@ return (
         <View style={styles.topicBar}>
             <Text style={styles.topic}> Trending</Text>
         </View>
-        <Text style={styles.articleBlue}> 
-            https://arandomsite.com/article/that/is/very/conservative/
+        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://google.com')}> 
+        
+            A Liberal Opinion of President Donald Trump
         </Text>
-        <Text style={styles.articleRed}> 
-            https://arandomsite.com/article/that/is/very/liberal
+        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://google.com')}> 
+            A Conservative Opinion of President Donald Trump
         </Text>
     </View>
 
