@@ -4,7 +4,36 @@ import logo from '../assets/logo.png'
 import * as firebase from 'firebase';
 import config from '../config.js'
 
+if (!firebase.apps.length){
+    firebase.initializeApp(config);
+    }
 
+getUserData = () => {
+    database = firebase.database();
+    var ref = database.ref('users');
+    ref.on('value', gotData, errData);
+}
+
+function gotData(data){
+    console.log(data.val());
+    var people = data.val();
+    var keys = Object.keys(people);
+    console.log(keys);
+    for( var i=0;i < keys.length; i++){
+        var k= keys[i];
+        var id = people[k].id;
+        var name = people[k].name;
+        console.log(id, name);
+
+    }
+
+}
+
+function errData(err){
+    console.log('Error!');
+    console.log(err);
+    
+}
 
 class Home extends React.Component {
 
@@ -15,62 +44,30 @@ backgroundColor: "#73C6B6"
 }
 };
 
-constructor(){
-    super();
-    if (!firebase.apps.length){
-    firebase.initializeApp(config);
-    }
+constructor(props){
+    super(props);
+    this.state={
+        title: "",
+        user: ""
+    };
 
-    this.state = {
-        currentItem: '',
-        username: '',
-        items: []
-      }
 }
 
-getUserData = () => {
-    let ref = firebase.database().ref('items/');
-    ref.on('value', snapshot => {
-    let items = snapshot.val();
-    let newState = [];
-    for (let item in items) {
-        newState.push({
-            id: item,
-            title: items[item].title,
-            user: items[item].user
-        });
-    }
-    this.setState({
-        items: newState
-        });
-    });
-  }
-componentDidMount(){
-    this.getUserData();
+componentWillMount(){
+    getUserData();
 }
+
 
 render() {
-    this.componentDidMount();
+    this.componentWillMount();
 return (
 <ScrollView >
 
     <View style={styles.container}>
 
         <View>
-            {this.state.items.map( (item) => {
-                return(
-                    <View>
-                    <Text> {item.id}</Text>
-                    <Text> {item.title}</Text>
-                    <Text> {item.user}</Text>
-                    </View>
-
-                );
-            })}
+            <Text> {this.state.title}</Text>
         </View>
-
- 
-
 
     <Text style={{fontSize:25, fontWeight:'800', marginBottom:10}}>WELL BALANCED</Text>
     <Text style={{fontSize:15, marginBottom:10}}> Updated: 10/30/2019 </Text>
@@ -84,57 +81,6 @@ return (
         </Text>
         <Text style={styles.articleRed}> 
             https://arandomsite.com/article/that/is/very/liberal
-        </Text>
-    </View>
-
-    <View style={styles.topicBox}>
-        <View style={styles.topicBar}>
-            <Text style={styles.topic}> Climate Change</Text>
-        </View>
-        <Text style={styles.articleBlue}> 
-            https://arandomsite.com/article/that/is/very/conservative/
-        </Text>
-        <Text style={styles.articleRed}> 
-            https://arandomsite.com/article/that/is/very/liberal
-        </Text>
-    </View>
-
-    <View style={styles.topicBox}>
-        <View style={styles.topicBar}>
-            <Text style={styles.topic}> Gun Control</Text>
-        </View>
-        <Text style={styles.articleBlue}> 
-            https://arandomsite.com/article/that/is/very/conservative/
-        </Text>
-        <Text style={styles.articleRed}> 
-            https://arandomsite.com/article/that/is/very/liberal
-
-        </Text>
-    </View>
-
-    <View style={styles.topicBox}>
-        <View style={styles.topicBar}>
-            <Text style={styles.topic}> Politics</Text>
-        </View>
-        <Text style={styles.articleBlue}> 
-            https://arandomsite.com/article/that/is/very/conservative/
-        </Text>
-        <Text style={styles.articleRed}> 
-            https://arandomsite.com/article/that/is/very/liberal
-
-        </Text>
-    </View>
-
-    <View style={styles.topicBox}>
-        <View style={styles.topicBar}>
-            <Text style={styles.topic}> Economy </Text>
-        </View>
-        <Text style={styles.articleBlue}> 
-            https://arandomsite.com/article/that/is/very/conservative/
-        </Text>
-        <Text style={styles.articleRed}> 
-            https://arandomsite.com/article/that/is/very/liberal
-
         </Text>
     </View>
 
