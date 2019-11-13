@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View, Button, ScrollView, Image, Linking } 
 import logo from '../assets/logo.png'
 import * as firebase from 'firebase';
 import config from '../config.js'
+import wb_logo from '../assets/wb_logo.png';
 
 if (!firebase.apps.length){
     firebase.initializeApp(config);
@@ -69,19 +70,48 @@ return (
             <Text> {this.state.title}</Text>
         </View>
 
-    <Text style={{fontSize:25, fontWeight:'800', marginBottom:10}}>WELL BALANCED</Text>
-    <Text style={{fontSize:15, marginBottom:10}}> Updated: 10/30/2019 </Text>
+    <Image source={wb_logo} style={"width:200px;height:600px;"}/>
+    <Text style={{fontSize:15, marginBottom:10}}> Updated: 11/12/2019 </Text>
 
     <View style={styles.topicBox}>
         <View style={styles.topicBar}>
-            <Text style={styles.topic}> Trending</Text>
+            <Text style={styles.topic}> Economy</Text>
         </View>
-        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://google.com')}> 
+        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}> 
         
-            A Liberal Opinion of President Donald Trump
+            Apple's Credit Card May Be Gender Biased
         </Text>
-        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://google.com')}> 
-            A Conservative Opinion of President Donald Trump
+        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.foxbusiness.com/money/trump-cutting-middle-class-taxes')}> 
+            Trump Plans To Unveil New Tax Cut For Middle Class in 2020
+        </Text>
+        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/richard-branson-south-africa-apology/index.html')}> 
+        
+            Richard Branson Tweets Apology After Posting A Picture of All White People When Unveiling South Africa News
+        </Text>
+        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.breitbart.com/politics/2019/11/12/donald-trump-booming-economy-allows-tough-trade-negotiation-china/')}> 
+        
+            A Booming Economy Gives Trump Strong Upper Hand in China Negotiations
+        </Text>
+    </View>
+
+    <View style={styles.topicBox}>
+        <View style={styles.topicBar}>
+            <Text style={styles.topic}> International </Text>
+        </View>
+        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.thesun.co.uk/tech/10328958/jeremy-corbyn-boris-johnson-election-deepfake-clips/')}> 
+        
+            Fake Video Shows Jeremy Corbin Backing Boris Johnson for Prime Minister
+        </Text>
+        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.nytimes.com/2019/11/12/world/europe/spain-government-sanchez-podemos.html')}> 
+            Spains Left Comes Up With Plan to Form A Government
+        </Text>
+        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.jpost.com/Breaking-News/Explosions-at-house-of-Islamic-Jihads-Abu-al-Ata-Palestinian-report-607579')}> 
+        
+            Isreal Pounded By 200 Rockets Following Killing of Jihadi Leader
+        </Text>
+        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.huffingtonpost.ca/entry/housing-affordability-canada_ca_5dcafda6e4b0fca7bb59b7b3?utm_hp_ref=ca-homepage')}> 
+        
+            Canadian Homes Have Become More Affordable for 9 Straight Months
         </Text>
     </View>
 
