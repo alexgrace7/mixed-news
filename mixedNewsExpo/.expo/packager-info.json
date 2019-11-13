@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://wd-e89.alexgrace7.mixednewsexpo.exp.direct",
-  "packagerNgrokUrl": "https://packager.wd-e89.alexgrace7.mixednewsexpo.exp.direct",
-  "ngrokPid": 81258
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
