@@ -15,16 +15,29 @@ getUserData = () => {
     ref.on('value', gotData, errData);
 }
 
-function gotData(data){
+getNewsData = () => {
+    database = firebase.database();
+    var ref = database.ref('news');
+    ref.on('value', getNews, errData);
+}
+
+function getNews(data){
+    console.log("here");
     console.log(data.val());
+
+}
+
+
+function gotData(data){
+    //console.log(data.val());
     var people = data.val();
     var keys = Object.keys(people);
-    console.log(keys);
+    //console.log(keys);
     for( var i=0;i < keys.length; i++){
         var k= keys[i];
         var id = people[k].id;
         var name = people[k].name;
-        console.log(id, name);
+        //console.log(id, name);
 
     }
 
@@ -56,11 +69,13 @@ constructor(props){
 
 componentWillMount(){
     getUserData();
+    getNewsData();
 }
 
 
 render() {
     this.componentWillMount();
+
 return (
 <ScrollView >
 
@@ -79,7 +94,7 @@ return (
         </View>
         <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}> 
         
-            Apple's Credit Card May Be Gender Biased
+                Is the Apple Credit Card Gender Biased?
         </Text>
         <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.foxbusiness.com/money/trump-cutting-middle-class-taxes')}> 
             Trump Plans To Unveil New Tax Cut For Middle Class in 2020
