@@ -1,11 +1,13 @@
-[
+{
+    "cards":[
     {
-        "name": "Alex",
-        "id": 1
-    },
-    {
-        "name": "Mark",
-        "id": 2
+        "title": "International",
+        "data": ["internatinal-1.com", "international-2.com"]
+    },{
+        "title": "Economy",
+        "data": ["economy-1.com", "economy-2.com"]
     }
 
-]
+    ]
+
+}

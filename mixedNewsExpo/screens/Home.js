@@ -1,52 +1,59 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button, ScrollView, Image, Linking } from "react-native";
+import { Platform, StyleSheet, Text, View, Button, ScrollView, Image, Linking, SectionList } from "react-native";
 import logo from '../assets/logo.png'
 import * as firebase from 'firebase';
 import config from '../config.js'
-import wb_logo from '../assets/wb_logo.png';
+import flag from '../assets/flag.png'
+import { Dimensions } from 'react-native';
 
 if (!firebase.apps.length){
     firebase.initializeApp(config);
     }
 
-getUserData = () => {
+getData = () => {
     database = firebase.database();
-    var ref = database.ref('users');
-    ref.on('value', gotData, errData);
+    var ref = database.ref('cards'); //the root of the db
+    ref.on('value',gotData, errData); // what to do with data
 }
-
-getNewsData = () => {
-    database = firebase.database();
-    var ref = database.ref('news');
-    ref.on('value', getNews, errData);
-}
-
-function getNews(data){
-    console.log("here");
-    console.log(data.val());
-
-}
-
 
 function gotData(data){
-    //console.log(data.val());
-    var people = data.val();
-    var keys = Object.keys(people);
-    //console.log(keys);
-    for( var i=0;i < keys.length; i++){
-        var k= keys[i];
-        var id = people[k].id;
-        var name = people[k].name;
-        //console.log(id, name);
+    var objectsArray = data.val(); // the array of cards
+    var cardItems = Object.keys(objectsArray); //  each card object in the array
+    var theTopic = "";
+    
 
+    for ( var i=0; i < cardItems.length; i++){
+        var k = cardItems[i];
+        theTopic = objectsArray[k].title;
+
+        var links = objectsArray[k].data; // the link array object
+        for ( var j =0; j < links.length; j++){
+            econArr=[];
+            intArr=[];
+            var x = links[j]; // the link
+            if( theTopic = "International"){
+                intArr.push(x);
+            }
+            if( theTopic = "Economy"){
+                econArr.push(x);
+            }
+            // console.log(x)
+        }
+        // console.log(topic)
+        return objectsArray    
+    }
+    //  console.log(item.topic) //print each 
     }
 
-}
+    var intArr=[];
+    var econArr=[];
+    var allLinks = [];
+
+
 
 function errData(err){
     console.log('Error!');
-    console.log(err);
-    
+    console.log(err); 
 }
 
 class Home extends React.Component {
@@ -61,16 +68,18 @@ backgroundColor: "#73C6B6"
 constructor(props){
     super(props);
     this.state={
-        title: "",
-        user: ""
+        title: "Well Balanced",
+        updated:"Updated: Thursday November 21st",
     };
 
 }
 
 componentWillMount(){
-    getUserData();
-    getNewsData();
+    getData();
+
 }
+
+deviceWidth = Dimensions.get('window').width;
 
 
 render() {
@@ -80,55 +89,50 @@ return (
 <ScrollView >
 
     <View style={styles.container}>
+        <View >
+            <View style={{ display: 'flex', flexDirection:'row'}}>
+                <Image style={{height: 50, width:50,marginRight:15}} source ={flag}/>
+                <Text style={styles.header}> {this.state.title}</Text>
+                <Image style={{height: 50, width:50,marginLeft:20}} source ={flag}/>
+            
+            </View>
+            
+            {/* <Image source={wb_logo} style={"width:200px;height:600px;"}/> */}
+            <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.updated}</Text>
 
-        <View>
-            <Text> {this.state.title}</Text>
         </View>
 
-    <Image source={wb_logo} style={"width:200px;height:600px;"}/>
-    <Text style={{fontSize:15, marginBottom:10}}> Updated: 11/12/2019 </Text>
+        
+        <View >
+            <SectionList sections={this.gotData}>
+            renderItem={({item}) => <Text>{item.key}</Text>}
 
-    <View style={styles.topicBox}>
-        <View style={styles.topicBar}>
-            <Text style={styles.topic}> Economy</Text>
-        </View>
-        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}> 
-        
-                Is the Apple Credit Card Gender Biased?
-        </Text>
-        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.foxbusiness.com/money/trump-cutting-middle-class-taxes')}> 
-            Trump Plans To Unveil New Tax Cut For Middle Class in 2020
-        </Text>
-        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/richard-branson-south-africa-apology/index.html')}> 
-        
-            Richard Branson Tweets Apology After Posting A Picture of All White People When Unveiling South Africa News
-        </Text>
-        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.breitbart.com/politics/2019/11/12/donald-trump-booming-economy-allows-tough-trade-negotiation-china/')}> 
-        
-            A Booming Economy Gives Trump Strong Upper Hand in China Negotiations
-        </Text>
-    </View>
+            </SectionList>
 
-    <View style={styles.topicBox}>
-        <View style={styles.topicBar}>
-            <Text style={styles.topic}> International </Text>
         </View>
-        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.thesun.co.uk/tech/10328958/jeremy-corbyn-boris-johnson-election-deepfake-clips/')}> 
-        
-            Fake Video Shows Jeremy Corbin Backing Boris Johnson for Prime Minister
-        </Text>
-        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.nytimes.com/2019/11/12/world/europe/spain-government-sanchez-podemos.html')}> 
-            Spains Left Comes Up With Plan to Form A Government
-        </Text>
-        <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.jpost.com/Breaking-News/Explosions-at-house-of-Islamic-Jihads-Abu-al-Ata-Palestinian-report-607579')}> 
-        
-            Isreal Pounded By 200 Rockets Following Killing of Jihadi Leader
-        </Text>
-        <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.huffingtonpost.ca/entry/housing-affordability-canada_ca_5dcafda6e4b0fca7bb59b7b3?utm_hp_ref=ca-homepage')}> 
-        
-            Canadian Homes Have Become More Affordable for 9 Straight Months
-        </Text>
-    </View>
+
+
+        {/* <View style={styles.topicBox}>
+            <View style={styles.topicBar}>
+                <Text style={styles.topic}> Economy</Text>
+            </View>
+            <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}> 
+            
+                    Is the Apple Credit Card Gender Biased?
+            </Text>
+            <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.foxbusiness.com/money/trump-cutting-middle-class-taxes')}> 
+                Trump Plans To Unveil New Tax Cut For Middle Class in 2020
+            </Text>
+            <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/richard-branson-south-africa-apology/index.html')}> 
+            
+                Richard Branson Tweets Apology After Posting A Picture of All White People When Unveiling South Africa News
+            </Text>
+            <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.breitbart.com/politics/2019/11/12/donald-trump-booming-economy-allows-tough-trade-negotiation-china/')}> 
+            
+                A Booming Economy Gives Trump Strong Upper Hand in China Negotiations
+            </Text>
+        </View>
+ */}
 
     </View>
 
@@ -146,6 +150,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent:'space-between',
       backgroundColor: '#FFFFFF',
+      textAlign:'center',
+    },
+    header:{
+        textAlign:'center',
+        fontSize: 40,
+
+
     },
     topic: {
         fontSize: 20,
@@ -158,6 +169,8 @@ const styles = StyleSheet.create({
         alignItems:'center',
         marginTop: 20,
         marginBottom:20,
+        borderColor: 'black',
+        borderWidth: 4
 
     },
     topicBar:{
