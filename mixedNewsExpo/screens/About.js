@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import logo from '../assets/logo.png';
+import alex from '../assets/alex.png';
 import signin from '../assets/signin.png';
 import Animated from 'react-native-reanimated';
 
@@ -27,11 +28,16 @@ export default class About extends Component {
         <Image source={logo} style={styles.logo}/>
         <Text style={styles.title}>About</Text>
         <Text style={styles.about}>
-            A news app that provides conservative and 
-            liberal articles on the same topic. Explore 
-            constrasting opinions in politics today.
+            In an increasingly polarized age, it becomes difficult to 
+            find an unbiased perspective. Only consuming media that 
+            already agrees with one's political biases only serves to
+            exacerbate the issue and make the nation even more ploarized.
+            The point of Well Balanced is to provide intentionally liberal
+            and intentionally conservative biased perspectives. See a pic 
+            of our founder Alex below!!
         
         </Text>
+        <Image source={alex} style={styles.logo}/>
        
       </View>
     );

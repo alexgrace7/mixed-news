@@ -4,6 +4,8 @@ import logo from '../assets/logo.png'
 import * as firebase from 'firebase';
 import config from '../config.js'
 import flag from '../assets/flag.png'
+import economy from '../assets/economy.jpg'
+import politics from '../assets/politics.jpg'
 import { Dimensions } from 'react-native';
 import sidebar from '../assets/sidebar.png';
 
@@ -63,7 +65,7 @@ function errData(err){
 class Home extends React.Component {
 
 static navigationOptions = {
-title: "Home",
+title: "News",
 headerStyle: {
 backgroundColor: "#73C6B6"
 }
@@ -74,7 +76,7 @@ constructor(props){
     
     this.state={
         title: "Well Balanced",
-        updated:"Updated: Thursday November 21st 2019",
+        updated:"Updated: Friday November 22nd 2019",
         sectionData: "",
     };
 
@@ -110,6 +112,7 @@ return (
             
             {/* <Image source={wb_logo} style={"width:200px;height:600px;"}/> */}
             <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.updated}</Text>
+            <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> Dow Jones: 27,822   |   S&P 500: 3,105</Text>
 
         </View>
         <TouchableOpacity onPress={this.onPressAbout} style={{right:10, top:3, position:'absolute'}}>
@@ -122,10 +125,33 @@ return (
 
 
 
-        {/* <View style={styles.topicBox}>
+        { <View style={styles.topicBox}>
             <View style={styles.topicBar}>
                 <Text style={styles.topic}> Economy</Text>
             </View>
+            <Text> </Text>
+            <Image source={economy} style={styles.logo}/>
+            <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}> 
+            
+                    Is the Apple Credit Card Gender Biased?
+            </Text>
+            <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.foxbusiness.com/money/trump-cutting-middle-class-taxes')}> 
+                Trump Plans To Unveil New Tax Cut For Middle Class in 2020
+            </Text>
+            <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/richard-branson-south-africa-apology/index.html')}> 
+            
+                Richard Branson Tweets Apology After Posting A Picture of All White People When Unveiling South Africa News
+            </Text>
+            <Text style={styles.articleRed} onPress={() => Linking.openURL('https://www.breitbart.com/politics/2019/11/12/donald-trump-booming-economy-allows-tough-trade-negotiation-china/')}> 
+            
+                A Booming Economy Gives Trump Strong Upper Hand in China Negotiations
+            </Text>
+
+            <View style={styles.topicBar}>
+                <Text style={styles.topic}> Politics</Text>
+            </View>
+            <Text> </Text>
+            <Image source={politics} style={styles.logo}/>
             <Text style={styles.articleBlue} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}> 
             
                     Is the Apple Credit Card Gender Biased?
@@ -142,7 +168,8 @@ return (
                 A Booming Economy Gives Trump Strong Upper Hand in China Negotiations
             </Text>
         </View>
- */}
+
+ }
 
     </View>
 

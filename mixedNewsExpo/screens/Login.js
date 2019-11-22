@@ -6,7 +6,7 @@ import signin from '../assets/signin.png';
 export default class Login extends Component {
 
     static navigationOptions = {
-        title: 'Login',
+        title: 'Home',
         headerStyle: {
         backgroundColor: '#03A9F4',
         },
@@ -39,7 +39,7 @@ export default class Login extends Component {
               constrasting opinions in politics today.
           
           </Text>
-          <Text style={styles.instructions}>To get started, login to the app with your Google account! </Text>
+          <Text style={styles.instructions}>To get a balanced perspective, click "Continue to News"! </Text>
           <TouchableOpacity onPress={this.onPressLogin}>
               <Image source={signin} style={styles.signin} />
           </TouchableOpacity>

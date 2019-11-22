@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 10072,
+  "expoServerNgrokUrl": "https://wd-e89.anonymous.mixednewsexpo.exp.direct",
+  "packagerNgrokUrl": "https://packager.wd-e89.anonymous.mixednewsexpo.exp.direct",
+  "ngrokPid": 12132
 }
