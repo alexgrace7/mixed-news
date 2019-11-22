@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
 import logo from '../assets/logo.png';
-import signin from '../assets/signin.png';
+import whitehouse from '../assets/whitehouse.jpg';
+
 
 export default class Login extends Component {
 
@@ -20,17 +21,39 @@ export default class Login extends Component {
     this.props.navigation.navigate('Home')
     }
     
+    constructor(props) {
+      super(props);
+      this.state={
+        image1Opacity: 1,
+        image1FadeIn: false,
+      };
+    }
 
+    componentDidMount(){
+      setInterval(()=>{ 
+            if(this.state.image1Opacity >= 1){
+              this.setState((state)=>({
+              image1Opacity: 0
+              }))
+            }else{
+               this.setState((state)=>({
+              image1Opacity: state.image1Opacity + 0.1
+              }))
+            }}
+            , 500)
+    }
 
   render() {
     return (
       <ScrollView>
+
+        <Image source = {whitehouse} style={styles.background}></Image>
         <View style={styles.container}>
-          <Image source={logo} style={styles.logo}/>
-          <Text style={styles.welcome}>Welcome to 
-            <Text style={{color:'#0074D9', fontSize: 30}}> Well
-            <Text style={{color:'#BC243C', fontSize: 30}}> Balanced</Text>
-            </Text>
+          <Image source={logo} style={{width: 200,height:100,opacity: this.state.image1Opacity}}/>
+          <Text style={styles.welcome}>
+            <Text style={{color:'#0074D9', fontSize: 40}}> WELL
+            <Text style={{color:'#BC243C', fontSize: 40}}> BALANCED</Text>
+          </Text>
             
           </Text>
           <Text style={styles.about}>
@@ -39,9 +62,8 @@ export default class Login extends Component {
               constrasting opinions in politics today.
           
           </Text>
-          <Text style={styles.instructions}>To get started, login to the app with your Google account! </Text>
-          <TouchableOpacity onPress={this.onPressLogin}>
-              <Image source={signin} style={styles.signin} />
+          <TouchableOpacity onPress={this.onPressLogin} style={styles.button}>
+              <Text style={{color:'white', fontSize: 20,}}> Continue to News  > </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -54,37 +76,44 @@ const styles = StyleSheet.create({
     marginTop: 65,
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    padding: 10,
+    width:300,
+    height:50,
+    marginTop: 60,
+    borderRadius:10,
+    fontFamily:'AmericanTypewriter'
+
   },
   welcome: {
     fontSize: 25,
     marginTop: 20,
     marginBottom: 20,
+    fontFamily:'AmericanTypewriter'
   },
   about: {
-    fontSize: 17,
+    fontSize: 25,
+    fontWeight:"600",
     textAlign: 'center',
-    marginTop:2,
-    marginBottom: 60,
+    marginTop:15,
+    marginBottom: 20,
     marginLeft: 30,
     marginRight:30,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginTop:40,
-    marginBottom: 18,
-    marginLeft: 30,
-    marginRight:30,
-
+    fontFamily:'AmericanTypewriter'
   },
   logo:{
     width: 200,
-    height:100
+    height:100,
   },
-  signin:{
-    marginTop:0,
-    width: 300,
-    height: 80,
+  background:{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    opacity: 0.3
   }
 });
