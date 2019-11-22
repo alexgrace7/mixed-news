@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button, ScrollView, Image, Linking, SectionList } from "react-native";
+import {  StyleSheet, Text, View,  ScrollView, Image, Linking, SectionList, TouchableOpacity,  } from "react-native";
 import logo from '../assets/logo.png'
 import * as firebase from 'firebase';
 import config from '../config.js'
 import flag from '../assets/flag.png'
 import { Dimensions } from 'react-native';
+import sidebar from '../assets/sidebar.png';
 
 if (!firebase.apps.length){
     firebase.initializeApp(config);
@@ -19,7 +20,17 @@ getData = () => {
 function gotData(data){
     var objectsArray = data.val(); // the array of cards
     var cardItems = Object.keys(objectsArray); //  each card object in the array
-    var theTopic = "";
+
+    // <SectionList sections={objectsArray} 
+    //     renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+    //     renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+    //     keyExtractor={(item, index) => index}
+    // >
+    // </SectionList>
+    
+    
+
+    // var li = createElement(SectionList, initials)
     
 
     for ( var i=0; i < cardItems.length; i++){
@@ -31,16 +42,9 @@ function gotData(data){
             econArr=[];
             intArr=[];
             var x = links[j]; // the link
-            if( theTopic = "International"){
-                intArr.push(x);
-            }
-            if( theTopic = "Economy"){
-                econArr.push(x);
-            }
-            // console.log(x)
+             console.log(x)
         }
-        // console.log(topic)
-        return objectsArray    
+        // console.log(topic)  
     }
     //  console.log(item.topic) //print each 
     }
@@ -67,9 +71,11 @@ backgroundColor: "#73C6B6"
 
 constructor(props){
     super(props);
+    
     this.state={
         title: "Well Balanced",
-        updated:"Updated: Thursday November 21st",
+        updated:"Updated: Thursday November 21st 2019",
+        sectionData: "",
     };
 
 }
@@ -81,6 +87,10 @@ componentWillMount(){
 
 deviceWidth = Dimensions.get('window').width;
 
+onPressAbout = () => {
+    this.props.navigation.navigate('About')
+    }
+
 
 render() {
     this.componentWillMount();
@@ -91,25 +101,25 @@ return (
     <View style={styles.container}>
         <View >
             <View style={{ display: 'flex', flexDirection:'row'}}>
-                <Image style={{height: 50, width:50,marginRight:15}} source ={flag}/>
+
                 <Text style={styles.header}> {this.state.title}</Text>
-                <Image style={{height: 50, width:50,marginLeft:20}} source ={flag}/>
+
             
             </View>
+
             
             {/* <Image source={wb_logo} style={"width:200px;height:600px;"}/> */}
             <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.updated}</Text>
 
         </View>
+        <TouchableOpacity onPress={this.onPressAbout} style={{right:10, top:3, position:'absolute'}}>
+                    <Image source={sidebar} style={{width:30, height:35}} />
+        </TouchableOpacity>
 
-        
-        <View >
-            <SectionList sections={this.gotData}>
-            renderItem={({item}) => <Text>{item.key}</Text>}
-
-            </SectionList>
+        <View id='sections'>
 
         </View>
+
 
 
         {/* <View style={styles.topicBox}>
