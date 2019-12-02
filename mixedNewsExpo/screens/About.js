@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import logo from '../assets/logo.png';
+
 
 
 export default class About extends Component {
@@ -15,10 +16,15 @@ export default class About extends Component {
         fontWeight: 'bold',
           },
         };
-
+        componentDidMount() {
+          setTimeout(() => {this.scrollView.scrollTo({x: -30}) }, 1) // scroll view position fix
+        }
   render() {
+    const { width } = Dimensions.get('window');
     return (
-      <ScrollView>
+      <ScrollView
+  
+      >
         <View style={styles.container}>
           <Image source={logo} style={styles.logo}/>
           <Text style={styles.title}>About</Text>
