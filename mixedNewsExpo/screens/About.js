@@ -5,11 +5,15 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
 let API_KEY = "0a18e85ba53d1a55afd5da056eadc0f3"
+let loc = ""
+let cond = ""
 
 export default class About extends Component {
   state = {
     location: null,
     errorMessage: null,
+    loc: null,
+    cond = null,
   };
 
   componentWillMount() {
@@ -42,9 +46,14 @@ export default class About extends Component {
       .then(json => {
         console.log(json);
         let weather_text = JSON.stringify(json)
-        let split_weather = weather_text.split('{')
-        console.log("Split weather 0:")
-        console.log(split_weather[0])
+        console.log("weather text: ")
+        console.log(weather_text)
+        let split_weather = weather_text.split('"')
+        console.log("Split weather 5:")
+        loc = split_weather[75]
+        this.setState({ loc })
+        cond = split_weather[17]
+        this.setState({ cond })
       });
   }
 
@@ -76,8 +85,7 @@ export default class About extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.paragraph}>{text}</Text>
-        <Text style={styles.paragraph}>{weather}</Text>
+        <Text style={styles.paragraph}>{loc}</Text>
       </View>
     );
   }
