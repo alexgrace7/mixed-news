@@ -18,12 +18,11 @@ export default class About extends Component {
         };
   render() {
     return (
-      <ScrollView
-  
-      >
-        <View style={styles.container}>
-          <Image source={logo} style={styles.logo}/>
-          <Text style={styles.title}>About</Text>
+      <ScrollView contentContainerStyle={styles.container}>
+          <View style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', marginTop: 20, borderRadius: 10}}> 
+            <Image source={logo} style={styles.logo}/>
+          </View>
+          
           <Text style={styles.about}>
               In an increasingly polarized age, it becomes difficult to 
               find an unbiased perspective. Only consuming media that 
@@ -32,7 +31,7 @@ export default class About extends Component {
               The point of Well Balanced is to provide intentionally liberal
               and intentionally conservative biased perspectives. 
           </Text>
-        </View>
+
       </ScrollView>
     );
   }
@@ -40,23 +39,24 @@ export default class About extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(7, 50, 84, 1)'
   },
   title: {
     fontSize: 40,
     marginTop: 20,
     marginBottom: 20,
+    color: 'white',
   },
   about: {
     fontSize: 24,
     textAlign: 'center',
-    marginTop:2,
+    marginTop:20,
     marginBottom: 60,
     marginLeft: 30,
     marginRight:30,
+    color:'white',
   },
   logo:{
     width: 200,

@@ -40,7 +40,7 @@ const Users = [
     },
 
     { id: "3", 
-    topic: "💻 Technology 💻",
+    topic: "💻 Tech 💻",
     link1:"https://www.bbc.com/news/business-50636521",
     header1:" 🔵 US mulls retaliation to French tech tax",
     link2:"https://www.bbc.com/news/education-50590581",
@@ -84,7 +84,6 @@ backgroundColor: "#73C6B6"
 }
 };
 
-
 constructor(props){
     super(props);
     
@@ -97,10 +96,7 @@ constructor(props){
         topicsArray: null,
        
     };
-
 }
-
-
 
 getData() {
     database = firebase.database();
@@ -173,6 +169,10 @@ onPressAbout = () => {
     this.props.navigation.navigate('About')
     }
 
+onPressWeather = () => {
+    this.props.navigation.navigate('Weather')
+    }
+
 renderCards = () => {
     return Users.map((item,i) => {
         console.log("render Cards function: " + this.state.objectsArray)
@@ -215,10 +215,6 @@ return (
                         </Text>
                     </Text>
                 </View>
-                {/* <View style={styles.stocks}>
-                    <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.updated}</Text>
-                    <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.stocks}</Text>
-                </View> */}
             </View>
         </View>
 
@@ -253,8 +249,8 @@ return (
                 <TouchableOpacity onPress={this.onPressAbout} >
                      <Text style={styles.footerElement}>ABOUT</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.onPressAbout} >
-                     <Text style={styles.footerElement}>YOUR PERSONAL NEWS</Text>
+                <TouchableOpacity onPress={this.onPressWeather} >
+                     <Text style={styles.footerElement}>YOUR WEATHER REPORT</Text>
                 </TouchableOpacity>
             </View>
 
