@@ -41,28 +41,37 @@ export default class About extends Component {
       .then(res => res.json())
       .then(json => {
         console.log(json);
-        return json;
+        let weather_text = JSON.stringify(json)
+        let split_weather = weather_text.split('{')
+        console.log("Split weather 0:")
+        console.log(split_weather[0])
       });
   }
 
   render() {
     let text = 'Waiting..';
     let weather = "weather is .. ";
-    var result = ""
-    var result2 = ""
+    var lat = ""
+    var long = ""
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.location) {
       text = JSON.stringify(this.state.location);
-      result = text.substring(73, 75)
-      result2 = text.substring(118, 121)
-      result = 38
-      result2 = -78
-      console.log("result is " + result);
-      console.log("result is " + result2);
+      text2 = text.split(":");
+      text3 = text2[6].split(",")
+      //console.log("text3:")
+      //console.log(text3[0])
+      long = text3[0]
+      //console.log("text 2 index 4")
+      //console.log(text2[4])
+      text4 = text2[4]
+      text5 = text4.split(',')
+      lat = text5[0]
+      //console.log("lat is " + lat);
+      //console.log("long is " + long);
     }
 
-    weather = this.fetchWeather(result, result2);
+    weather = this.fetchWeather(lat, long);
     console.log("the weather is: " +  JSON.stringify(weather))
 
     return (
