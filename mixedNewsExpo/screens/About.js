@@ -4,6 +4,8 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
+let API_KEY = "0a18e85ba53d1a55afd5da056eadc0f3"
+
 export default class About extends Component {
   state = {
     location: null,
@@ -32,17 +34,41 @@ export default class About extends Component {
     this.setState({ location });
   };
 
+  fetchWeather(lat, lon) {
+    fetch(
+      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}&units=metric`
+    )
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      });
+  }
+
   render() {
     let text = 'Waiting..';
+    let weather = "weather is .. ";
+    var result = ""
+    var result2 = ""
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.location) {
       text = JSON.stringify(this.state.location);
+      result = text.substring(73, 75)
+      result2 = text.substring(118, 121)
+      result = 38
+      result2 = -78
+      console.log("result is " + result);
+      console.log("result is " + result2);
     }
+
+    weather = this.fetchWeather(result, result2);
+    console.log("the weather is: " +  JSON.stringify(weather))
 
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>{text}</Text>
+        <Text style={styles.paragraph}>{weather}</Text>
       </View>
     );
   }
