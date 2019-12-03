@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  StyleSheet, Text, View,  ScrollView, Image, TouchableOpacity,  } from "react-native";
+import {  StyleSheet, Text, View,  ScrollView, Image, TouchableOpacity,  Linking} from "react-native";
 import * as firebase from 'firebase';
 import config from '../config.js'
 import { Dimensions } from 'react-native';
@@ -17,61 +17,61 @@ const { width } = Dimensions.get('window');
 const Users = [
     { id: "1", 
     topic: "🌎 World 🌎",
-    link1:"https://www.bbc.com/news/business-50636521",
-    header1:" 🔵 US mulls retaliation to French tech tax",
-    link2:"https://www.bbc.com/news/education-50590581",
-    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
-    link3:"https://www.bbc.com/news/business-50636521",
-    header3:" 🔵 US mulls retaliation to French tech tax",
-    link4:"https://www.bbc.com/news/education-50590581",
-    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+    link1:"https://www.cnn.com/2019/12/02/asia/us-military-hong-kong-intl-hnk-scli/index.html",
+    header1:" 🔵 China Hits The US With A Military Ban",
+    link2:"https://www.foxnews.com/world/iran-state-run-tv-security-forces-shot-killed-rioters-gas-price-protests",
+    header2:" 🔴 Iran Security Forces Kill Protesters",
+    link3:"https://www.cnn.com/2019/12/03/europe/greta-thunberg-lisbon-cop25-intl-scli/index.html",
+    header3:" 🔵 Thunberg Arrives In Lisbon",
+    link4:"https://www.foxnews.com/politics/trump-emmanuel-macron-nato-france-needs-alliance-brain-dead",
+    header4:" 🔴 Trump And Macron Have Tense Meeting Regarding Isis"
     },
 
     { id: "2",
      topic: "📈 Economy 📈",
-     link1:"https://www.bbc.com/news/business-50636521",
-    header1:" 🔵 US mulls retaliation to French tech tax",
-    link2:"https://www.bbc.com/news/education-50590581",
-    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
-    link3:"https://www.bbc.com/news/business-50636521",
-    header3:" 🔵 US mulls retaliation to French tech tax",
-    link4:"https://www.bbc.com/news/education-50590581",
-    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests" 
+     link1:"https://www.cnn.com/2019/12/03/business/ak-steel-cleveland-cliff-deal/index.html",
+    header1:" 🔵 US Steel Company Selling For 1/2 Its Value From When Trump Took Office",
+    link2:"https://www.foxbusiness.com/markets/rio-tinto-plowing-1-5b-into-kennecott-copper-mine-exclusive",
+    header2:" 🔴 International Company Invests 1.5B Into American Mining",
+    link3:"https://www.washingtonpost.com/us-policy/2019/12/03/trump-says-trade-deal-with-china-could-wait-until-after-election/",
+    header3:" 🔵 DOW Drops 400 Points After This Trump Announcement",
+    link4:"https://www.foxbusiness.com/markets/mike-pence-interview-trump-economy-trade",
+    header4:" 🔴 Trump Uses Economy's Strength As Trade Talk Leverage" 
     },
 
     { id: "3", 
     topic: "💻 Tech 💻",
-    link1:"https://www.bbc.com/news/business-50636521",
-    header1:" 🔵 US mulls retaliation to French tech tax",
-    link2:"https://www.bbc.com/news/education-50590581",
-    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
-    link3:"https://www.bbc.com/news/business-50636521",
-    header3:" 🔵 US mulls retaliation to French tech tax",
-    link4:"https://www.bbc.com/news/education-50590581",
-    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+    link1:"https://www.bbc.com/news/science-environment-50644545",
+    header1:" 🔵 Artificial Neurons Developed To Fight Disease",
+    link2:"https://www.breitbart.com/tech/2019/12/03/tech-watchdog-google-facebook-engage-in-one-way-mirror-surveillance/",
+    header2:" 🔴 Google/Facebook Engage In One Way Surveilance",
+    link3:"https://www.bbc.com/future/article/20191129-what-will-an-ice-free-arctic-look-like",
+    header3:" 🔵 The Search For Life At The North Pole",
+    link4:"https://www.breitbart.com/tech/2019/12/03/lawsuit-tiktok-sent-user-data-of-americans-to-china/",
+    header4:" 🔴 Tik Tok Sends American Data To China"
     },
 
     { id: "4", 
     topic: "💵 Business 💵",
     link1:"https://www.bbc.com/news/business-50636521",
     header1:" 🔵 US mulls retaliation to French tech tax",
-    link2:"https://www.bbc.com/news/education-50590581",
-    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
-    link3:"https://www.bbc.com/news/business-50636521",
-    header3:" 🔵 US mulls retaliation to French tech tax",
-    link4:"https://www.bbc.com/news/education-50590581",
-    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+    link2:"https://www.wsj.com/articles/sprint-overcounted-low-income-customers-for-years-11575374400?mod=business_lead_pos1",
+    header2:" 🔴 Sprint Has Over Counted Low Income Families For Years",
+    link3:"http://realestate.boston.com/renting/2019/12/02/rent-two-bedroom-boston-rises/?s_campaign=bdc:hp:well:realestate",
+    header3:" 🔵 Rent Increases 8.5% In Boston",
+    link4:"https://markets.businessinsider.com/news/stocks/list-of-french-products-impacted-possibly-by-tariffs-trump-administration-2019-12-1028735058",
+    header4:" 🔴 List Of French Products Trump May Tax"
  },
     { id: "5", 
     topic: "👤 Social 👤", 
-    link1:"https://www.bbc.com/news/business-50636521",
-    header1:" 🔵 US mulls retaliation to French tech tax",
-    link2:"https://www.bbc.com/news/education-50590581",
-    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
-    link3:"https://www.bbc.com/news/business-50636521",
-    header3:" 🔵 US mulls retaliation to French tech tax",
-    link4:"https://www.bbc.com/news/education-50590581",
-    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+    link1:"https://www.cnn.com/2019/12/03/entertainment/brad-pitt-interview-anthony-hopkins-interview-magazine/index.html",
+    header1:" 🔵 Brad Pitt Cries More Than He Used To",
+    link2:"https://www.wsj.com/articles/found-womens-jeans-that-wont-go-out-of-style-11575127977",
+    header2:" 🔴 Women's Jeans That Don't Go Out of Style",
+    link3:"https://www.cnn.com/2019/12/03/entertainment/black-widow-trailer-teaser/index.html",
+    header3:" 🔵 First 'Black Widow' Trailer Is Out",
+    link4:"https://www.foxnews.com/auto/top-gear-america-dax-shepard-rob-corddry",
+    header4:" 🔴 Top Gear America Is Returning"
 },
   ]
 
@@ -184,10 +184,18 @@ renderCards = () => {
                 <ScrollView style={styles.view} key={item.id}>
                     <Text style= {styles.cardTopic}> {item.topic} </Text>
                     <View style= {{marginTop: 15}}>
-                        <Text style={styles.articleHeader}> {item.header1}</Text>
-                        <Text style={styles.articleHeader}> {item.header2}</Text>
-                        <Text style={styles.articleHeader}> {item.header3}</Text>
-                        <Text style={styles.articleHeader}> {item.header4}</Text>
+                        <Text style={styles.articleHeader} onPress={() => Linking.openURL(item.link1)}>
+                            {item.header1}
+                        </Text>
+                        <Text style={styles.articleHeader} onPress={() => Linking.openURL(item.link2)}>
+                            {item.header2}
+                        </Text>
+                        <Text style={styles.articleHeader} onPress={() => Linking.openURL(item.link3)}>
+                            {item.header3}
+                        </Text>
+                        <Text style={styles.articleHeader} onPress={() => Linking.openURL(item.link4)}>
+                            {item.header4}
+                        </Text>
                     </View>
                 </ScrollView> 
             )
