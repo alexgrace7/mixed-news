@@ -52,8 +52,8 @@ export default class Login extends Component {
           <Image source={logo} style={{width: 200,height:100,opacity: this.state.image1Opacity}}/>
 
             <Text style={styles.welcome}>
-              <Text style={{color:'#00FFFF', fontSize: 45}}> WELL
-              <Text style={{color:'red', fontSize: 45}}> BALANCED</Text>
+              <Text style={{color:'#00FFFF', fontSize: 40}}> WELL
+              <Text style={{color:'red', fontSize: 40}}> BALANCED</Text>
               </Text>
             </Text>
 

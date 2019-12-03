@@ -182,11 +182,7 @@ renderCards = () => {
         else {
             return(
                 <ScrollView style={styles.view} key={item.id}>
-                    <Text 
-                        style= {styles.cardTopic}
-                    >
-                         {item.topic}
-                    </Text>
+                    <Text style= {styles.cardTopic}> {item.topic} </Text>
                     <View style= {{marginTop: 15}}>
                         <Text style={styles.articleHeader}> {item.header1}</Text>
                         <Text style={styles.articleHeader}> {item.header2}</Text>
@@ -210,8 +206,8 @@ return (
             <View >
                 <View style={{ display: 'flex', flexDirection:'row'}}>
                     <Text style={styles.welcome}>
-                        <Text style={{color:'#00FFFF', fontSize: 45}}> WELL
-                            <Text style={{color:'red', fontSize: 45}}> BALANCED</Text>
+                        <Text style={{color:'#00FFFF', fontSize: 40}}> WELL
+                            <Text style={{color:'red', fontSize: 40}}> BALANCED</Text>
                         </Text>
                     </Text>
                 </View>

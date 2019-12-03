@@ -21,7 +21,9 @@ export default class Weather extends Component {
     city: null,
     humidity: null,
     tempMax: null,
-    tempMin: null
+    tempMin: null, 
+    lat: null, 
+    long: null,
   };
 
   static navigationOptions = {
@@ -51,22 +53,23 @@ export default class Weather extends Component {
             position => {
               const location = JSON.stringify(position);
             console.log("INSIDE COMP DID MOUNT " + location)
-              this.setState({ location });
+              this.setState({
+                   lat: position.coords.latitude, 
+                   long: position.coords.longitude,
+                });
             },
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
           );
       }
 
-      fetchWeather(lat = 25, lon = 25) {
+      fetchWeather(lat = this.state.lat, lon = this.state.long) {
         fetch(
           `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}&units=metric`
         )
           .then(res => res.json())
           .then(json => {
             console.log("INSIDE FETCH WEATHER FUNC")
-            console.log(json);
-            console.log(json.main.temp)
             this.setState({
                 city: json.name,
                 temperature: json.main.temp,
@@ -75,7 +78,6 @@ export default class Weather extends Component {
                 humidity: json.main.humidity,
                 tempMax: json.main.temp_max,
                 tempMin: json.main.temp_min,
-
             })
           });
       }
@@ -89,8 +91,6 @@ export default class Weather extends Component {
 <ScrollView contentContainerStyle={styles.container}>
     <Image source = {weather} style={styles.background}></Image>
       <View >
-           {console.log("in return: " + this.state.temperature)}
-           {console.log("in return: " + this.state.city)}
           {isLoading ? (
               <Text> Loading Your Weather</Text>
           ):(
