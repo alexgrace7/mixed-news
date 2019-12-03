@@ -72,12 +72,12 @@ export default class Weather extends Component {
             console.log("INSIDE FETCH WEATHER FUNC")
             this.setState({
                 city: json.name,
-                temperature: json.main.temp,
+                temperature: json.main.temp * 2 + 32,
                 weatherCondition: json.weather[0].description,
                 isLoading: false, 
                 humidity: json.main.humidity,
-                tempMax: json.main.temp_max,
-                tempMin: json.main.temp_min,
+                tempMax: json.main.temp_max * 2 + 32,
+                tempMin: json.main.temp_min * 2 + 32,
             })
           });
       }
