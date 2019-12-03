@@ -45,17 +45,18 @@ export default class Login extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor: 'rgba(0, 0, 0, 0.8)'}}>
 
         <Image source = {whitehouse} style={styles.background}></Image>
         <View style={styles.container}>
           <Image source={logo} style={{width: 200,height:100,opacity: this.state.image1Opacity}}/>
-          <Text style={styles.welcome}>
-            <Text style={{color:'#0074D9', fontSize: 40}}> WELL
-            <Text style={{color:'#BC243C', fontSize: 40}}> BALANCED</Text>
-          </Text>
-            
-          </Text>
+
+            <Text style={styles.welcome}>
+              <Text style={{color:'#00FFFF', fontSize: 45}}> WELL
+              <Text style={{color:'red', fontSize: 45}}> BALANCED</Text>
+              </Text>
+            </Text>
+
           <Text style={styles.about}>
               A news app that provides conservative and 
               liberal articles on the same topic. Explore 
@@ -85,14 +86,17 @@ const styles = StyleSheet.create({
     height:50,
     marginTop: 60,
     borderRadius:10,
-    fontFamily:'AmericanTypewriter'
+    fontFamily:"Futura-Medium",
 
   },
   welcome: {
     fontSize: 25,
     marginTop: 20,
     marginBottom: 20,
-    fontFamily:'AmericanTypewriter'
+    fontFamily:"Futura-Medium",
+    textShadowColor: 'white',
+    textShadowOffset: {width: 3, height: 3},
+    textShadowRadius: 7,
   },
   about: {
     fontSize: 25,
@@ -102,7 +106,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 30,
     marginRight:30,
-    fontFamily:'AmericanTypewriter'
+    fontFamily:"Futura-Medium",
+    color:'white',
   },
   logo:{
     width: 200,

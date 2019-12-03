@@ -36,4 +36,6 @@ target 'mixedNewsExpo' do
 
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
+  pod 'react-native-shake', :path => '../node_modules/react-native-shake'
+
 end

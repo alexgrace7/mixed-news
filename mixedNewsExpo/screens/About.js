@@ -16,11 +16,7 @@ export default class About extends Component {
         fontWeight: 'bold',
           },
         };
-        componentDidMount() {
-          setTimeout(() => {this.scrollView.scrollTo({x: -30}) }, 1) // scroll view position fix
-        }
   render() {
-    const { width } = Dimensions.get('window');
     return (
       <ScrollView
   

@@ -1,13 +1,79 @@
 import React, { Component } from "react";
-import {  StyleSheet, Text, View,  ScrollView, Image, Linking, SectionList, TouchableOpacity,  } from "react-native";
+import {  StyleSheet, Text, View,  ScrollView, Image, TouchableOpacity,  } from "react-native";
 import * as firebase from 'firebase';
 import config from '../config.js'
-import sidebar from '../assets/sidebar.png';
+import { Dimensions } from 'react-native';
+import whitehouse from '../assets/whitehousehome.jpg';
+import RNShake from 'react-native-shake';
+
 
 
 if (!firebase.apps.length){
     firebase.initializeApp(config);
     }
+
+const { width } = Dimensions.get('window');
+
+const Users = [
+    { id: "1", 
+    topic: "🌎 World 🌎",
+    link1:"https://www.bbc.com/news/business-50636521",
+    header1:" 🔵 US mulls retaliation to French tech tax",
+    link2:"https://www.bbc.com/news/education-50590581",
+    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
+    link3:"https://www.bbc.com/news/business-50636521",
+    header3:" 🔵 US mulls retaliation to French tech tax",
+    link4:"https://www.bbc.com/news/education-50590581",
+    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+    },
+
+    { id: "2",
+     topic: "📈 Economy 📈",
+     link1:"https://www.bbc.com/news/business-50636521",
+    header1:" 🔵 US mulls retaliation to French tech tax",
+    link2:"https://www.bbc.com/news/education-50590581",
+    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
+    link3:"https://www.bbc.com/news/business-50636521",
+    header3:" 🔵 US mulls retaliation to French tech tax",
+    link4:"https://www.bbc.com/news/education-50590581",
+    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests" 
+    },
+
+    { id: "3", 
+    topic: "💻 Technology 💻",
+    link1:"https://www.bbc.com/news/business-50636521",
+    header1:" 🔵 US mulls retaliation to French tech tax",
+    link2:"https://www.bbc.com/news/education-50590581",
+    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
+    link3:"https://www.bbc.com/news/business-50636521",
+    header3:" 🔵 US mulls retaliation to French tech tax",
+    link4:"https://www.bbc.com/news/education-50590581",
+    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+    },
+
+    { id: "4", 
+    topic: "💵 Business 💵",
+    link1:"https://www.bbc.com/news/business-50636521",
+    header1:" 🔵 US mulls retaliation to French tech tax",
+    link2:"https://www.bbc.com/news/education-50590581",
+    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
+    link3:"https://www.bbc.com/news/business-50636521",
+    header3:" 🔵 US mulls retaliation to French tech tax",
+    link4:"https://www.bbc.com/news/education-50590581",
+    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+ },
+    { id: "5", 
+    topic: "👤 Social 👤", 
+    link1:"https://www.bbc.com/news/business-50636521",
+    header1:" 🔵 US mulls retaliation to French tech tax",
+    link2:"https://www.bbc.com/news/education-50590581",
+    header2:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests",
+    link3:"https://www.bbc.com/news/business-50636521",
+    header3:" 🔵 US mulls retaliation to French tech tax",
+    link4:"https://www.bbc.com/news/education-50590581",
+    header4:" 🔴 Pisa rankings: Why Estonian pupils shine in global tests"
+},
+  ]
 
 class Home extends React.Component {
 
@@ -27,36 +93,9 @@ constructor(props){
         updated:"Updated: Thursday November 21st 2019",
         stocks: "Down Jones: 27,822 | S&P 300: 3,105",
         objectsArray : null,
-        sectionData: [
-            {
-                "title": "International",
-                "data": ["Netanyaho to be indicted for fraud", "Protesters attempt to flee Hong Kong university",
-                        "colombia protests prompt border closures", "The world's best pension system is being pushed to the brink"]
-            },
-            {
-                "title": "Economy",
-                "data": ["Personal loans are 'growning like a weed', a potential warning sign for the U.S. economy",
-                 "Split shifts, unpredictale hours. A retail worker's life."]
-            },
-            {
-                "title": "Business",
-                "data": ["How a lousy tenant seeded an idea and a moneymaking business",
-                 "Last month, Fed officials said the 3 rate cuts of 2019 were enough",
-                "Trump says China isn't 'stepping up', and trade talks show signs of languishing"]
-            },
-            {
-                "title": "Politics",
-                "data": ["Hill said she told Songland that his efforts in Ukraine would 'blow up'",
-                 "Impeachment hearings live updates: Trump says Democrats 'looked like fools' during public hearings"]
-            },
-            {
-                "title": "Technology",
-                "data": ["The Technology 202: Getting digital evidence can be hard for police. This bill would create a new office to help."
-                , "Apple says its App Store is ‘a safe and trusted place.’ We found 1,500 reports of unwanted sexual behavior on six apps, some targeting minors.",
-                "America loves pickup trucks. Can Elon Musk win drivers over with a Tesla ‘Cybertruck’?"]
-            }
-        ],
-
+        linksArray: null,
+        topicsArray: null,
+       
     };
 
 }
@@ -68,12 +107,27 @@ getData() {
     var ref = database.ref('cards'); //the root of the db
    let upState = this
     ref.on('value', function(data){
-            console.log("keep stat"+upState 
-            )
-           upState.setState({
-                objectsArray: data.val()
-            })
+            allObjects = data.val(); // the array of cards
+            cardItems = Object.keys(allObjects); //  each card object index in the array
+            topicsArr = []
+            linksArr = []
+            for ( var i=0; i < cardItems.length; i++){
+                k = cardItems[i];
+                theTopic = allObjects[k].title; // the topic headers 
+                topicsArr.push(theTopic);
+                links = allObjects[k].data; // the link array object
+                linksArr.push(links)
 
+            }
+            console.log("cardItems:" + cardItems)
+            console.log("keep stat"+upState)
+            console.log("topicsArray: " + topicsArr)
+            
+           upState.setState({
+                objectsArray: allObjects,
+                linksArray: linksArr,
+                topicsArray: topicsArr,
+            })
     }); // what to do with data
 }
 
@@ -86,11 +140,7 @@ getData() {
         theTopic = objectsArray[k].title;
 
         var links = objectsArray[k].data; // the link array object
-        for ( var j =0; j < links.length; j++){
-            econArr=[];
-            intArr=[];
-            var x = links[j]; // the link
-        }
+       
         // console.log(topic)  
     }
     }
@@ -104,51 +154,108 @@ errData(err){
 
 componentWillMount(){
     this.getData();
+    RNShake.addEventListener('ShakeEvent', () => {
+        console.log("SHAKING");
+        this.props.navigation.navigate('Login')
+
+    });
+}
+
+componentWillUnmount() {
+    RNShake.removeEventListener('ShakeEvent');
+  }
+
+componentDidMount() {
+    setTimeout(() => {this.scrollView.scrollTo({x: -30}) }, 1) // scroll view position fix
 }
 
 onPressAbout = () => {
     this.props.navigation.navigate('About')
     }
 
+renderCards = () => {
+    return Users.map((item,i) => {
+        console.log("render Cards function: " + this.state.objectsArray)
+        if (this.state.objectsArray == null){
+            return null;
+        }
+        else {
+            return(
+                <ScrollView style={styles.view} key={item.id}>
+                    <Text 
+                        style= {styles.cardTopic}
+                    >
+                         {item.topic}
+                    </Text>
+                    <View style= {{marginTop: 15}}>
+                        <Text style={styles.articleHeader}> {item.header1}</Text>
+                        <Text style={styles.articleHeader}> {item.header2}</Text>
+                        <Text style={styles.articleHeader}> {item.header3}</Text>
+                        <Text style={styles.articleHeader}> {item.header4}</Text>
+                    </View>
+                </ScrollView> 
+            )
+        }
+    })
+}
+
 
 render() {
 
 return (
-    <ScrollView >
+    <ScrollView contentContainerStyle={styles.mainContainer} >
+        <Image source = {whitehouse} style={styles.background}></Image>
 
         <View style={styles.container}>
             <View >
                 <View style={{ display: 'flex', flexDirection:'row'}}>
-                        <Text style={styles.header}> {this.state.title}</Text>
+                    <Text style={styles.welcome}>
+                        <Text style={{color:'#00FFFF', fontSize: 45}}> WELL
+                            <Text style={{color:'red', fontSize: 45}}> BALANCED</Text>
+                        </Text>
+                    </Text>
                 </View>
-                <View style={styles.stocks}>
+                {/* <View style={styles.stocks}>
                     <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.updated}</Text>
                     <Text style={{fontSize:15, marginBottom:10, textAlign:'center'}}> {this.state.stocks}</Text>
-                </View>
+                </View> */}
             </View>
-            <TouchableOpacity onPress={this.onPressAbout} style={{right:10, top:8, position:'absolute', height: 25, width:25}}>
-                        <Image source={sidebar} style={{   width: '100%',height:'100%',}} />
-            </TouchableOpacity>
         </View>
 
-        <View style={styles.sectionView}>
+            <ScrollView 
+                ref={(scrollView) => { this.scrollView = scrollView; }}
+                style={styles.container}
+                //pagingEnabled={true}
+                horizontal= {true}
+                decelerationRate={0}
+                snapToInterval={width - 60}
+                snapToAlignment={"center"}
+                contentInset={{
+                top: 0,
+                left: 30,
+                bottom: 0,
+                right: 30,
+                }}
+            >
+            {this.renderCards()}
+
             {console.log("in render" + this.state.objectsArray)}
-            {this.state.objectsArray !== null ? (
-                <SectionList
-                sections={this.state.objectsArray}
-                renderItem={({item}) => 
-                <Text style={styles.item} onPress={() => Linking.openURL('https://www.cnn.com/2019/11/12/business/apple-card-gender-bias/index.html')}>
-                    {item}
-                </Text>}
-                renderSectionHeader={
-                    ({section}) => 
-                    <Text style={styles.sectionHeader}>
-                        {section.title}
-                    </Text>
-                    }
-                keyExtractor={(item, index) => index}
-                />
-            ) : (<View/>)}
+            {this.state.objectsArray !== null ?  (
+
+                     <View style={styles.view} />
+            ) 
+
+            : (<View/>)}
+                
+            </ScrollView>
+
+            <View style={styles.footer}> 
+                <TouchableOpacity onPress={this.onPressAbout} >
+                     <Text style={styles.footerElement}>ABOUT</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.onPressAbout} >
+                     <Text style={styles.footerElement}>YOUR PERSONAL NEWS</Text>
+                </TouchableOpacity>
             </View>
 
 
@@ -160,18 +267,22 @@ return (
 export default Home;
 
 const styles = StyleSheet.create({
-    container: {
-      marginTop: 15,
+    mainContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent:'space-between',
-      backgroundColor: '#FFFFFF',
       textAlign:'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      height:"100%",
+
+
     },
     header:{
+        marginTop: 4,
+        color:'white',
         textAlign:'center',
         fontSize: 40,
-        fontFamily:'AmericanTypewriter',
+        fontFamily:"Futura-Medium",
     },
     sectionView: {
         flex: 1,
@@ -194,44 +305,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#AFEEEE',
         
     },
-
     topic: {
         fontSize: 20,
         letterSpacing: 4,
         fontFamily:"Futura-Medium",
         textTransform:"uppercase",
     },
-    topicBox:{
-        display: 'flex',
-        alignItems:'center',
-        marginTop: 20,
-        marginBottom:20,
-        borderColor: 'black',
-        borderWidth: 4
-
-    },
-    topicBar:{
-        width:300,
-         alignItems:'center',
-         backgroundColor:"#DDDDDD",
-         borderRadius: 35,
-    },
-    articleBlue:{
-        marginTop: 8,
-        marginBottom: 8,
-        marginRight: 8,
-        marginLeft:8,
-        color: '#0074D9',
-        textAlign:'center',
-    },
-    articleRed:{
-        marginTop: 8,
-        marginBottom: 8,
-        marginRight: 8,
-        marginLeft:8,
-        color: '#b94a48',
-        textAlign:'center',
-    },
+    
     stocks:{
         marginTop: 10,
         paddingTop: 10,
@@ -239,6 +319,70 @@ const styles = StyleSheet.create({
         borderColor:'grey',
         borderWidth: 1,
         width: 400,
+    },
+    container: {},
+        view: {
+            marginTop: 50,
+            backgroundColor: 'rgba(0, 116, 217, 0.4)',
+            width: width - 80,
+            margin: 10,
+            height: '70%',
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: '#d6d7da',
+        },
+    cardTopic: {
+        marginTop: 10,
+        color: 'white',
+        textAlign:'center',
+        fontSize: 25,
+        letterSpacing: 4,
+        fontFamily:"Futura-Medium",
+        textTransform:"uppercase",
+    },
+    articleHeader: {
+        color: 'white',
+        marginTop: 30,
+        fontFamily:"Futura-Medium",
+        fontSize: 20,
+        paddingTop: 3,
+        paddingBottom: 3,
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    background:{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        opacity: 0.2
+      },
+    footer:{
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent:'center',
+        borderWidth: 1,
+        borderColor:'white',
+        width: '100%',
+        borderRadius: 10,
+        backgroundColor: 'rgba(0, 116, 217, 0.4)',
+    },
+    footerElement: {
+        marginLeft: 20, 
+        marginRight: 20,
+        color: 'white',
+        fontSize: 20,
+        fontFamily:"Futura-Medium",
+    }, 
+    welcome: {
+        fontSize: 25,
+        marginTop: 20,
+        marginBottom: 20,
+        fontFamily:"Futura-Medium",
+        textShadowColor: 'white',
+        textShadowOffset: {width: 3, height: 3},
+        textShadowRadius: 7,
+      },
 
-    }
 });
